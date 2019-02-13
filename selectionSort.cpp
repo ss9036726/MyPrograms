@@ -1,20 +1,23 @@
 #include <iostream>
+
 using namespace std;
 
-void insertionSort(int arr[],int n)
+void selectionSort(int arr[],int n)
 {
-    int index,j;
-    for(int i=0;i<n;i++)
+    int temp,index;
+    for(int i=0;i<n-1;i++)
     {
-        index=arr[i];
-        j=i-1;
-
-        while(j>=0 && arr[j] > index)
+        index=i;
+        for(int j=i+1;j<n;j++)
         {
-            arr[j+1]=arr[j];
-            j=j-1;
+            if(arr[j] < arr[index])
+            {
+                index=j;
+            }
         }
-        arr[j+1]=index;
+        temp=arr[index];
+        arr[index]=arr[i];
+        arr[i]=temp;
     }
 }
 
@@ -31,7 +34,7 @@ int main()
 {
     int arr[100];
     int i,n;
-    cout<<"Enter the size of an Array : ";
+    cout<<"Enter the size of the Array : ";
     cin>>n;
     cout<<"Enter the value : ";
     for(i=0;i<n;i++)
@@ -40,7 +43,7 @@ int main()
     }
     cout<<"The Array is : ";
     printArray(arr,n);
-    insertionSort(arr,n);
+    selectionSort(arr,n);
     cout<<endl<<"The Sorted Array is : ";
     printArray(arr,n);
     return 0;

@@ -1,20 +1,20 @@
 #include <iostream>
 using namespace std;
 
-void insertionSort(int arr[],int n)
+void bubbleSort(int arr[],int n)
 {
-    int index,j;
-    for(int i=0;i<n;i++)
+    int temp;
+    for(int i=0;i<n-1;i++)
     {
-        index=arr[i];
-        j=i-1;
-
-        while(j>=0 && arr[j] > index)
+        for(int j=0;j<n-1;j++)
         {
-            arr[j+1]=arr[j];
-            j=j-1;
+            if(arr[j] > arr[j+1])
+            {
+                temp=arr[j];
+                arr[j]=arr[j+1];
+                arr[j+1]=temp;
+            }
         }
-        arr[j+1]=index;
     }
 }
 
@@ -31,7 +31,7 @@ int main()
 {
     int arr[100];
     int i,n;
-    cout<<"Enter the size of an Array : ";
+    cout<<"Enter the size of Array : ";
     cin>>n;
     cout<<"Enter the value : ";
     for(i=0;i<n;i++)
@@ -40,8 +40,8 @@ int main()
     }
     cout<<"The Array is : ";
     printArray(arr,n);
-    insertionSort(arr,n);
-    cout<<endl<<"The Sorted Array is : ";
+    bubbleSort(arr,n);
+    cout<<endl<<"The Sorted Array is  : ";
     printArray(arr,n);
     return 0;
 }

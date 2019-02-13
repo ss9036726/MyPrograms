@@ -1,90 +1,88 @@
 #include <iostream>
 using namespace std;
-struct node
-{	
-	int data;
-	node *next;	
-};
-node* push(node **head,int val)
-{
-	node *ptr=new node;
-	ptr->data=val;
-	ptr->next=*head;
-	*head=ptr;
-	return *head;
-}
-node* mergesort(node *a,node *b)
-{
-	node *ptr,*ptr1,*ptr2;
-	ptr=ptr1=NULL;
-	while(1)
-	{
-		if(a==NULL)
-		{
-			ptr1->next=b;
-			break;
-		}
-		if(b==NULL)
-		{
-			ptr1->next=a;
-			break;
-		}
 
-		if(a->data <= b->data)
-		{
-			ptr2=a;
-			a=a->next;
-		}
-		else
-		{
-			ptr2=b;
-			b=b->next;
-		}
-
-		if(ptr==NULL)
-		{
-			ptr=ptr1=ptr2;
-		}
-		else
-		{
-			ptr1->next=ptr2;
-			ptr1=ptr2;
-		}
-		ptr1->next=NULL;
-	}
-	return ptr;
-}
-void display(node *n)
+void merge(int arr[],int l,int m,int h)
 {
-	while(n!=NULL)
-	{
-		cout<<n->data<<" ";
-		n=n->next;
-	}
-	cout<<endl;
+    int i,j,k;
+    int n1,n2;
+    n1 = m-l+1;
+    n2 = h-m;
+    int a[n1],b[n2];
+
+    for(i=0;i<n1;i++)
+    {
+        a[i]=arr[l+i];
+    }
+    for(j=0;j<n2;j++)
+    {
+        b[j]=arr[m+j+1];
+    }
+
+    i=0,j=0,k=l;
+
+    while(i < n1 && j<n2)
+    {
+        if(a[i]<=b[j])
+        {
+            arr[k]=a[i];
+            i++;
+        }
+        else 
+        {
+            arr[k]=b[j];
+            j++;
+        }
+        k++;
+    }
+
+    while(i < n1)
+    {
+        arr[k++]=a[i++];
+    }
+
+    while(j<n2)
+    {
+        arr[k++]=b[j++];
+    }
+}
+
+void mergeSort(int arr[],int l,int h)
+{
+    if(l<h)
+    {
+        int m = (l+(h-l)/2);
+
+        mergeSort(arr,l,m);
+        mergeSort(arr,m+1,h);
+
+        merge(arr,l,m,h);
+    }
+}
+
+void printArray(int arr[],int n)
+{
+    for(int i=0;i<n;i++)
+    {
+        cout<<arr[i]<<" ";
+    }
+    cout<<endl;
 }
 
 int main()
 {
-	struct node *a=NULL;
-	struct node *b=NULL;
-	struct node *merges=NULL;
-	push(&a,9);
-	push(&a,4);
-	push(&a,8);
-	push(&a,5);
-	cout<<endl;
-	cout<<"The first List is : ";
-	display(a);
-	cout<<endl;
-	push(&b,1);
-	push(&b,7);
-	push(&b,3);
-	push(&b,2);
-	cout<<"The second List is : ";
-	display(b);
-	cout<<endl;
-	merges=mergesort(a,b);
-	display(merges);
-	return 0;
+    int arr[100];
+    int i,n;
+    cout<<"Enter the size of an array : ";
+    cin>>n;
+    cout<<"Enter the value : ";
+    for(i=0;i<n;i++)
+    {
+        cin>>arr[i];
+    }
+    cout<<"The Array is : ";
+    printArray(arr,n);
+    mergeSort(arr,0,n-1);
+    cout<<endl<<"The Sorted Array is : ";
+    printArray(arr,n);
+    return 0;
 }
